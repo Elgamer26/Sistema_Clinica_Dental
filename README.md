@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Sistema_Clinica_Dental
 Sistema creado en Laravel 10, MySql, sistema para el control de servicios, productos y citas de una clinica dental
 =======
