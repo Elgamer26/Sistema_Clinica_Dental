@@ -1,7 +1,5 @@
 @include('layout.header')
 
-
-
 <div class="page-body">
     <div class="container-xl">
         <div class="row row-deck row-cards">
@@ -17,24 +15,28 @@
                         <form id="FrmUsuarioCreate">
 
                             <div class="row">
+
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label class="form-label">Nombre</label>
                                         <input id="nombre_usu" type="text" class="form-control" placeholder="Ingrese nombre" maxlength="35">
                                     </div>
                                 </div>
+
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label class="form-label">Apellido</label>
                                         <input id="apellido_usu" type="text" class="form-control" placeholder="Ingrese apellido" maxlength="35">
                                     </div>
                                 </div>
+
                                 <div class="col-lg-12">
                                     <div class="mb-3">
                                         <label class="form-label">Correo</label>
                                         <input id="correo_usu" type="text" class="form-control" placeholder="Ingrese correo" maxlength="40">
                                     </div>
                                 </div>
+
                                 <div class="col-lg-12">
                                     <div class="mb-3">
                                         <label class="form-label">Rol</label>
@@ -48,12 +50,15 @@
                                         <input id="usuario_usu" type="text" class="form-control" placeholder="Ingrese usuario" maxlength="15">
                                     </div>
                                 </div>
+
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <label class="form-label">Password</label>
                                         <input id="password_usu" type="text" class="form-control" placeholder="Ingrese password" maxlength="7">
                                     </div>
                                 </div>
+
+                                <input type="hidden" id="foto_antigua">
 
                                 <div class="col-lg-10">
                                     <div class="mb-3">
@@ -65,7 +70,7 @@
                                 <div class="col-lg-2">
                                     <div class="mb-3">
                                         <label class="form-label">.</label>
-                                        <a class="btn btn-success ms-auto">
+                                        <a onclick="CambiarImagen();" class="btn btn-success ms-auto">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                                 <path d="M12 5l0 14" />
@@ -80,9 +85,10 @@
 
                             <br>
 
-                            <a href="./" class="btn btn-danger">
+                            <a href="{{ route('admin') }}" class="btn btn-danger">
                                 Cancel
                             </a>
+
                             <a class="btn btn-primary ms-auto" onclick="UpdateUsuarioPerfil()">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -107,7 +113,8 @@
 
 <script>
     const Routes = {
-        Url_UpdatePerfil: "{{ route('usuario.update_perfil') }}"
+        Url_UpdatePerfil: "{{ route('usuario.update_perfil') }}",
+        Url_UpdatePerfilFoto: "{{ route('usuario.update_perfil_foto') }}"
     };
 </script>
 
@@ -130,12 +137,7 @@
                     $("#rol_usu").val(response.success[0]["rol"]);
                     $("#password_usu").val(response.success[0]["password_usu"]);
                     $("#usuario_usu").val(response.success[0]["usuario_usu"]);
-                    //$("#foto_usu").val();
-
-                    // $("#NombreUsuario").html(response.success[0]["nombre"])
-                    // $("#NombreRol").html(response.success[0]["rol"])
-                    // var imageUrl = "img/usuario/" + response.success[0]["foto"] + "";
-                    // $('#avataraa').css('background-image', 'url(' + imageUrl + ')');
+                    $("#foto_antigua").val(response.success[0]["foto"]);
 
                 } else if (response.status == 400) {
                     Swal.fire({

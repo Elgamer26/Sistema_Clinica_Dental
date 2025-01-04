@@ -77,6 +77,19 @@ class ControllerAdmin extends BaseController
         }
     }
 
+    public function datos_empresa()
+    {
+        if (!isset($_SESSION["iduser"])) {
+            return redirect()->route('/');  // login
+        } else {
+            $dato = $this->usuario->listar_empresa();
+            $lista = [
+                'data' =>  $dato
+            ];
+            return view('admin/datos_empresa',  $lista);
+        }
+    }
+
     // ******************************************
 
     // PROCESO DE LOGIN
@@ -325,7 +338,6 @@ class ControllerAdmin extends BaseController
                 } else {
                     return response()->json(['success' => '', 'error' => 'Bad Request', 'status' => 400], 400);
                 }
-                
             } else {
                 return response()->json(['success' => '', 'error' => 'Bad Request', 'status' => 403], 403);
             }
@@ -334,4 +346,65 @@ class ControllerAdmin extends BaseController
         }
     }
 
+    public function update_perfil_foto(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            if ($request->ajax()) {
+
+                $valor = 0;
+                $foto_antigua = $request->foto_antigua;
+                $file  = $request->file('img_extra');
+
+                if (!empty($file)) {
+
+                    $nombreFinal = sha1($file->getClientOriginalName() . time()) . '.' . $file->getClientOriginalExtension();
+                    $valor = $this->usuario->EditarImagenPerfil($_SESSION["iduser"], $nombreFinal);
+                    if ($valor == 1) {
+
+                        if ($foto_antigua != 'admin.jpg') {
+                            $filePath = public_path('img/usuario');
+                            $fullPath = $filePath . '/' . $foto_antigua;
+                            if (file_exists($fullPath)) {
+                                unlink($fullPath);
+                            }
+                        }
+
+                        $filePath = public_path('img/usuario');
+                        $file->move($filePath, $nombreFinal);
+                        
+                    }
+                }
+
+            }
+            if ($valor == 1) {
+                return response()->json(['success' => 'Imagen ingresado de forma correcta', 'error' => '', 'status' => 200], 200);
+            } else {
+                return response()->json(['success' => '', 'error' => 'No se ha podido cargar la imagen', 'status' => 403], 401);
+            }
+        } else {
+            return response()->json(['success' => '', 'error' => 'Bad Request', 'status' => 403], 403);
+        }
+    }
+
+    public function update_empresa(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            if ($request->ajax()) {
+                $razon = $request->nombre_usu;
+                $direccion = $request->apellido_usu;
+                $correo = $request->correo_usu;
+                $telefono = $request->rol_usu;
+                $repuesta_create = $this->usuario->update_empresa($razon, $direccion, $correo, $telefono);
+                if ($repuesta_create == 1) {
+                    return response()->json(['success' => 'Datos editados de forma correcta', 'error' => '', 'status' => 200], 200);
+                } else {
+                    return response()->json(['success' => '', 'error' => 'Bad Request', 'status' => 400], 400);
+                }
+            } else {
+                return response()->json(['success' => '', 'error' => 'Bad Request', 'status' => 403], 403);
+            }
+        } else {
+            return response()->json(['success' => '', 'error' => 'Bad Request', 'status' => 403], 403);
+        }
+    }
 }

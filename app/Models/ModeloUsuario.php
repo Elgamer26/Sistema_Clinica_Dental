@@ -96,6 +96,24 @@ class ModeloUsuario
         exit();
     }
 
+    function listar_empresa()
+    {
+        try {
+            $c = $this->conexion->conexionPDO();
+            $sql = "SELECT * FROM empresa limit 1";
+            $query = $c->prepare($sql);
+            $query->execute();
+            $result = $query->fetch(\PDO::FETCH_BOTH);
+            //cerramos la conexion
+            $this->conexion->cerrar_conexion();
+            return $result;
+        } catch (\Exception $e) {
+            $this->conexion->cerrar_conexion();
+            echo "Error: " . $e->getMessage();
+        }
+        exit();
+    }
+
     function eliminar_rol($id)
     {
         try {
@@ -157,7 +175,7 @@ class ModeloUsuario
         exit();
     }
 
-    function usuario_create($nombre_usu,$apellido_usu,$correo_usu,$rol_usu,$password_usu,$usuario_usu,$foto_usu)
+    function usuario_create($nombre_usu, $apellido_usu, $correo_usu, $rol_usu, $password_usu, $usuario_usu, $foto_usu)
     {
 
         try {
@@ -306,10 +324,8 @@ class ModeloUsuario
         exit();
     }
 
-
     function update_perfil($nombre_usu, $apellido_usu, $correo_usu, $usuario_usu, $id, $password_usu)
     {
-
         try {
             $res = 0;
             $c = $this->conexion->conexionPDO();
@@ -341,6 +357,56 @@ class ModeloUsuario
                 $res = 2;
             }
 
+            $this->conexion->cerrar_conexion();
+            return $res;
+        } catch (\Exception $e) {
+            $this->conexion->cerrar_conexion();
+            echo response()->json(['success' => '', 'error' => 'Error: ' . $e->getMessage(), 'status' => 403], 403);
+        }
+        exit();
+    }
+
+    function update_empresa($razon, $direccion, $correo, $telefono)
+    {
+        try {
+            $res = 0;
+            $c = $this->conexion->conexionPDO();
+            $sql_a = "UPDATE empresa SET nombre = ?,direccion = ?,correo = ?,telefono = ?";
+            $querya = $c->prepare($sql_a);
+            $querya->bindParam(1, $razon);
+            $querya->bindParam(2, $direccion);
+            $querya->bindParam(3, $correo);
+            $querya->bindParam(4, $telefono);
+
+            if ($querya->execute()) {
+                $res = 1;
+            } else {
+                $res = 0;
+            }
+
+            $this->conexion->cerrar_conexion();
+            return $res;
+        } catch (\Exception $e) {
+            $this->conexion->cerrar_conexion();
+            echo response()->json(['success' => '', 'error' => 'Error: ' . $e->getMessage(), 'status' => 403], 403);
+        }
+        exit();
+    }
+
+    function EditarImagenPerfil($id, $nombreFinal)
+    {
+        try {
+            $res = 0;
+            $c = $this->conexion->conexionPDO();
+            $sql_a = "UPDATE usuario SET foto = ? WHERE id = ?";
+            $querya = $c->prepare($sql_a);
+            $querya->bindParam(1, $nombreFinal);
+            $querya->bindParam(2, $id);
+            if ($querya->execute()) {
+                $res = 1;
+            } else {
+                $res = 0;
+            }
             $this->conexion->cerrar_conexion();
             return $res;
         } catch (\Exception $e) {

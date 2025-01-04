@@ -5,7 +5,7 @@
         <div class="row g-2 align-items-center">
             <div class="col">
                 <div class="page-pretitle">
-                    Clientes
+                    Compras de productos
                 </div>
                 <h2 class="page-title">
                     Listado
@@ -22,7 +22,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Clientes</h3>
+                        <h3 class="card-title">Compras de productos</h3>
                     </div>
 
                     <div class="table-responsive">
@@ -32,7 +32,7 @@
                                     <th style="font-size: 15px;">Acción</th>
                                     <th style="font-size: 15px;">Fecha</th>
                                     <th style="font-size: 15px;">Comprobnte</th>
-                                    <th style="font-size: 15px;">N. Comprobnte</th>
+                                    <th style="font-size: 15px;">N. Comprobante</th>
                                     <th style="font-size: 15px;">Subtotal</th>
                                     <th style="font-size: 15px;">Impuesto</th>
                                     <th style="font-size: 15px;">Total</th>
@@ -40,33 +40,28 @@
                                 </tr>
                             </thead>
                             <tbody id="HtmlBody">
-                                @foreach ($lista as $cliente)
+                                @foreach ($lista as $compra)
                                 <tr>
                                     <th style="font-size: 10px;">
-                                        <a class="btn btn-primary">
-                                            Editar
+                                        <a class="btn btn-primary"  href="{{ route('compra.detalle_compra', $compra['id']) }}" target="_blank">
+                                            Detalle
                                         </a>
                                         -
                                         <a class="btn btn-danger">
                                             Eliminar
                                         </a>
                                     </th>
-                                    <th style="font-size: 15px;">{{ $cliente["fecha"] }}</th>
-
-                                    @if ($cliente["tipo_comprabante"] == 'fac')
+                                    <th style="font-size: 15px;">{{ $compra["fecha"] }}</th>
+                                    @if ($compra["tipo_comprabante"] == 'fac')
                                     <th style="font-size: 15px;">Factura</th>
                                     @else
                                     <th style="font-size: 15px;">Nota de venta</th>
                                     @endif
-
-                                    <th style="font-size: 15px;">{{ $cliente["numero_factura"] }}</th>
-
-                                    <th style="font-size: 15px;">$ {{ $cliente["subtotal"] }}</th>
-                                    <th style="font-size: 15px;">$ {{ $cliente["impuesto_sub"] }}</th>
-                                    <th style="font-size: 15px;">$ {{ $cliente["total_pagar"] }}</th>
-
-                                    <th style="font-size: 15px;">{{ $cliente["usuario"] }}</th>
-
+                                    <th style="font-size: 15px;">{{ $compra["numero_factura"] }}</th>
+                                    <th style="font-size: 15px;">$ {{ $compra["subtotal"] }}</th>
+                                    <th style="font-size: 15px;">$ {{ $compra["impuesto_sub"] }}</th>
+                                    <th style="font-size: 15px;">$ {{ $compra["total_pagar"] }}</th>
+                                    <th style="font-size: 15px;">{{ $compra["usuario"] }}</th>
                                 </tr>
                                 @endforeach
                             </tbody>

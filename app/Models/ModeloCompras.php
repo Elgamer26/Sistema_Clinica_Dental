@@ -72,7 +72,6 @@ class ModeloCompras
                 } else {
                     $result = 0;
                 }
-
             } else {
                 $res = 0;
             }
@@ -107,7 +106,9 @@ class ModeloCompras
         } else {
             try {
                 $c = $this->conexion->conexionPDO();
-                $sql = "SELECT id,nombre,tipo,precio,tipo_descuento,descuento,descripcion,stock from producto where id = ? AND estado = 1 LIMIT 1";
+                $sql = "SELECT id,fecha,tipo_comprabante,numero_factura,subtotal,impuesto_sub,total_pagar,
+                (SELECT nombre FROM clinicadental.usuario u WHERE u.id = p.id_usu LIMIT 1) as usuario
+                from compra p where id = ? AND estado = 1 LIMIT 1";
                 $query = $c->prepare($sql);
                 $query->bindParam(1, $id);
                 $query->execute();
@@ -124,4 +125,25 @@ class ModeloCompras
         exit();
     }
 
+    function listado_compras_detalle($id)
+    {
+        try {
+            $c = $this->conexion->conexionPDO();
+            $sql = "SELECT d.id_compra, d.id_pro, d.precio, d.cantidad, p.nombre
+                    FROM detalle_compra d inner join producto p on d.id_pro = p.id where d.id_compra = ?";
+            $query = $c->prepare($sql);
+            $query->bindParam(1, $id);
+            $query->execute();
+            $result = $query->fetchAll(\PDO::FETCH_BOTH);
+            //cerramos la conexion
+            $this->conexion->cerrar_conexion();
+            return $result;
+        } catch (\Exception $e) {
+            $this->conexion->cerrar_conexion();
+            echo "Error: " . $e->getMessage();
+        }
+
+
+        exit();
+    }
 }

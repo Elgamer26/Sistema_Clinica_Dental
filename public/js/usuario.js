@@ -513,6 +513,7 @@ function UpdateUsuarioPerfil() {
                     text: response.success,
                     icon: "success"
                 });
+                ObtenerInfoUsuarioLogin();
             } else if (response.status == 201) {
                 Swal.fire({
                     title: "Usuario ya existe!",
@@ -535,5 +536,154 @@ function UpdateUsuarioPerfil() {
         }
     });
 }
+
+function CambiarImagen() {
+
+    var foto = $("#foto_usu").val();
+    var foto_antigua = $("#foto_antigua").val();
+
+    if (foto.trim() == "" || parseInt(foto.length) <= 0) {
+        Swal.fire({
+            title: "No ha ingresado imagen!",
+            text: "Ingrese una imagen para continuar",
+            icon: "warning"
+        });
+        return false;
+    }
+
+    var formdata = new FormData();
+    foto = $("#foto_usu")[0].files[0];
+
+    var formdata = new FormData();
+    formdata.append("foto_antigua", foto_antigua);
+    formdata.append("img_extra", foto);
+
+    $.ajax({
+        type: "POST",
+        url: Routes.Url_UpdatePerfilFoto,
+        data: formdata,
+        contentType: false,
+        processData: false,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (response) {
+            if (response.status == 200) {
+                Swal.fire({
+                    title: "Registro ok!",
+                    text: response.success,
+                    icon: "success"
+                });
+                ObtenerInfoUsuarioLogin();
+                ObtenerUsuarioPefil();
+                $("#foto_usu").val("");
+            } else if (response.status == 401) {
+                Swal.fire({
+                    title: "No se puede procesar!",
+                    text: response.error,
+                    icon: "error"
+                });
+            } else if (response.status == 403) {
+                Swal.fire({
+                    title: "No se puede procesar!",
+                    text: response.error,
+                    icon: "error"
+                });
+            }
+        }
+
+    });
+}
+
+/// EMPRESA
+function ActualizarEmpresa() {
+
+    var validar_datos = "";
+    var nombre_usu = $("#nombre_usu").val().trim();
+    var apellido_usu = $("#apellido_usu").val().trim();
+    var correo_usu = $("#correo_usu").val();
+    var rol_usu = $("#rol_usu").val().trim();
+
+    if (nombre_usu.trim() == "" || parseInt(nombre_usu.length) <= 0) {
+        validar_datos = "* Ingrese una razon social para continuar <br>"
+    }
+
+    if (apellido_usu.trim() == "" || parseInt(apellido_usu.length) <= 0) {
+        if (validar_datos.trim == "") {
+            validar_datos = "* Ingrese una dirección continuar <br>"
+        } else {
+            validar_datos = validar_datos + "* Ingrese una dirección continuar <br>"
+        }
+    }
+
+    if (correo_usu.trim() == "" || parseInt(correo_usu.length) <= 0) {
+        if (validar_datos.trim == "") {
+            validar_datos = "* Ingrese un correo para continuar <br>"
+        } else {
+            validar_datos = validar_datos + "* Ingrese un correo para continuar <br>"
+        }
+    }
+
+    if (rol_usu.trim() == "" || parseInt(rol_usu.length) <= 0) {
+        if (validar_datos.trim == "") {
+            validar_datos = "* Ingrese un telefono para continuar <br>"
+        } else {
+            validar_datos = validar_datos + "* Ingrese un telefono para continuar <br>"
+        }
+    }
+
+    if (parseInt(validar_datos.length) > 0) {
+        Swal.fire({
+            title: "No ha ingresado datos!",
+            html: validar_datos,
+            icon: "warning"
+        });
+        return false;
+    }
+
+    var formdata = new FormData();
+
+    formdata.append("nombre_usu", nombre_usu);
+    formdata.append("apellido_usu", apellido_usu);
+    formdata.append("correo_usu", correo_usu);
+    formdata.append("rol_usu", rol_usu);
+
+    $.ajax({
+        type: "POST",
+        url: Routes.Url_UpdateEmpresa,
+        data: formdata,
+        contentType: false,
+        processData: false,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (response) {
+            if (response.status == 200) {
+                Swal.fire({
+                    title: "Registro actualizado!",
+                    text: response.success,
+                    icon: "success"
+                });
+            } else if (response.status == 400) {
+                Swal.fire({
+                    title: "No se puede procesar!",
+                    text: response.error,
+                    icon: "error"
+                });
+            } else if (response.status == 403) {
+                Swal.fire({
+                    title: "No se puede procesar!",
+                    text: response.error,
+                    icon: "error"
+                });
+            }
+        }
+    });
+
+
+}
+
+///
+
 
 

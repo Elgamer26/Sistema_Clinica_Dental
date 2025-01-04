@@ -35,6 +35,9 @@ Route::controller(ControllerAdmin::class)->group(function () {
     Route::get('/info_user', 'info_user')->name("usuario.info_user");
     Route::get('/usuario_perfil', 'usuario_perfil')->name("usuario.perfil");
     Route::post('/update_perfil', 'update_perfil')->name("usuario.update_perfil");
+    Route::get('/datos_empresa', 'datos_empresa')->name("usuario.empresa");
+    Route::post('/update_empresa', 'update_empresa')->name("usuario.update_empresa");
+    Route::post('/update_perfil_foto', 'update_perfil_foto')->name("usuario.update_perfil_foto");
 });
 
 // Agrupación de rutas para el controlador ControllerCliente
@@ -79,6 +82,7 @@ Route::controller(ControllerCompras::class)->group(function () {
     Route::get('/nueva_compra', 'nueva_compra')->name("compra.form_nueva_compra");
     Route::post('/crear_compra', 'crear_compra')->name("compra.crear_compra");
     Route::get('/lista_compras', 'lista_compras')->name("compra.form_lista_compra");
+    Route::get('/detalle_compra/{id}', 'detalle_compra')->name("compra.detalle_compra");
 });
 
 // Agrupación de rutas para el controlador ControllerTienda
@@ -90,5 +94,3 @@ Route::controller(ControllerCarrito::class)->group(function () {
     Route::get('/servicios', 'servicios')->name("carrito.servicios");
 });
 
-// Route::get('/Rol', [ControllerAdmin::class, 'rol'])->name("usuario.rol");
-// Route::post('/register_rol', [ControllerAdmin::class, 'register_rol'])->name("rol.create");

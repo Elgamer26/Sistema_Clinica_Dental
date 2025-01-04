@@ -122,7 +122,10 @@
                                             <a class="dropdown-item" href="{{ route('usuario.usuario') }}">
                                                 Usuarios
                                             </a>
-                                            <a class="dropdown-item" href="./accordion.html">
+                                            <a class="dropdown-item" href="{{ route('usuario.empresa') }}">
+                                                Datos empresa
+                                            </a>
+                                            <a class="dropdown-item" href="#">
                                                 Permisos
                                             </a>
                                         </div>
