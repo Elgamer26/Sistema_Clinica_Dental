@@ -46,6 +46,23 @@ function RegistraProducto() {
         }
     }
 
+    let descoferta = 0;
+    if (tipo_descuento.trim() == "no") {
+        descoferta = precio_producto;
+    } else if (tipo_descuento.trim() == "desc") {
+        descoferta = parseFloat(precio_producto - descuento).toFixed(2);
+    } else if (tipo_descuento.trim() == "proc") {
+        descoferta = parseFloat(precio_producto * descuento / 100).toFixed(2);
+    }
+
+    if (parseInt(descoferta) <= 0) {
+        if (validar_datos.trim == "") {
+            validar_datos = "* Se ha detectado que el valor a pagar por el producto es negativo " + descoferta + ". <br>"
+        } else {
+            validar_datos = validar_datos +  "* Se ha detectado que el valor a pagar por el producto es negativo " + descoferta + ". <br>"
+        }
+    }
+
     if (parseInt(validar_datos.length) > 0) {
         Swal.fire({
             title: "No ha ingresado datos!",

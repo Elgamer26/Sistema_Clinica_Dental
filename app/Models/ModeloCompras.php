@@ -64,9 +64,8 @@ class ModeloCompras
 
                 $sql_m = "UPDATE producto SET stock = stock + ? where id = ?";
                 $query_m = $c->prepare($sql_m);
-                $query_m->bindParam(1, $id_pro);
-                $query_m->bindParam(2, $cantidad);
-
+                $query_m->bindParam(1, $cantidad);
+                $query_m->bindParam(2, $id_pro);
                 if ($query_m->execute()) {
                     $res = 1;
                 } else {

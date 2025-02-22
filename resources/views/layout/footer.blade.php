@@ -26,22 +26,21 @@
         </div>
     </div>
 </footer>
-</div>
-</div>
 
+</div>
+</div>
 
 <script src="{{ asset('template/dist/js/jquery-3.7.1.min.js') }}"></script>
 <script src="{{ asset('template/dist/js/sweetalert2@11.js') }}"></script>
 <script src="{{ asset('js/usuario.js') }}"></script>
-
-<!-- Libs JS -->
 <script src="{{ asset('template/dist/libs/apexcharts/dist/apexcharts.min.js?1692870487') }}" defer></script>
 <script src="{{ asset('template/dist/libs/jsvectormap/dist/js/jsvectormap.min.js?1692870487') }}" defer></script>
 <script src="{{ asset('template/dist/libs/jsvectormap/dist/maps/world.js?1692870487') }}" defer></script>
 <script src="{{ asset('template/dist/libs/jsvectormap/dist/maps/world-merc.js?1692870487') }}" defer></script>
-<!-- Tabler Core -->
 <script src="{{ asset('template/dist/js/tabler.min.js?1692870487') }}" defer></script>
 <script src="{{ asset('template/dist/js/demo.min.js?1692870487') }}" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <script>
     // @formatter:off
     document.addEventListener("DOMContentLoaded", function() {

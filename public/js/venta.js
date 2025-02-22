@@ -1,6 +1,7 @@
 function RegistraCompra() {
 
     var validar_datos = "";
+    var cliente = $("#cliente_select").val();
     var fecha = $("#fecha_compra").val();
     var tipo_comprabante = $("#tipo_comprabante").val();
     var iva = $("#iva").val();
@@ -25,6 +26,14 @@ function RegistraCompra() {
         }
     }
 
+    if (cliente.trim() == "" || parseInt(cliente.length) <= 0) {
+        if (validar_datos.trim == "") {
+            validar_datos = "* Ingrese un cliente para continuar <br>"
+        } else {
+            validar_datos = validar_datos + "* Ingrese un cliente para continuar <br>"
+        }
+    }
+
     if (iva.trim() == "" || parseInt(iva.length) <= 0 || parseInt(iva) < 0) {
         if (validar_datos.trim == "") {
             validar_datos = "* Ingrese el IVA para continuar <br>"
@@ -43,9 +52,9 @@ function RegistraCompra() {
 
     if (total_pagar.trim() == "" || parseInt(total_pagar.length) <= 0 || parseInt(total_pagar) <= 0) {
         if (validar_datos.trim == "") {
-            validar_datos = "* El total a pagar no puede ser 0 o menor a 0 <br>"
+            validar_datos = "* El total a pgar no puede ser 0 o menor a 0 <br>"
         } else {
-            validar_datos = validar_datos + "* El total a pagar no puede ser 0 o menor a 0 <br>"
+            validar_datos = validar_datos + "* El total a pgar no puede ser 0 o menor a 0 <br>"
         }
     }
 
@@ -57,9 +66,9 @@ function RegistraCompra() {
 
     if (count == 0) {
         if (validar_datos.trim == "") {
-            validar_datos = "* No hay producto en el detalle de compra <br>"
+            validar_datos = "* No hay producto en el detalle de venta <br>"
         } else {
-            validar_datos = validar_datos + "* No hay producto en el detalle de compra <br>"
+            validar_datos = validar_datos + "* No hay producto en el detalle de venta <br>"
         }
     }
 
@@ -72,10 +81,10 @@ function RegistraCompra() {
             arrego_id_producto.push($(this).find("td").eq(0).text());
             arreglo_precio.push($(this).find("#precio_a").val());
             arreglo_cantidad.push($(this).find("#cantida_a").val());
-            if ($(this).find("#precio_a").val() <= 0){
+            if ($(this).find("#precio_a").val() <= 0) {
                 pre_cer++;
             }
-            if ($(this).find("#cantida_a").val() <= 0){
+            if ($(this).find("#cantida_a").val() <= 0) {
                 cant_cer++;
             }
         }
@@ -112,6 +121,8 @@ function RegistraCompra() {
     var cantidad = arreglo_cantidad.toString();
 
     var formdata = new FormData();
+
+    formdata.append("cliente", cliente);
     formdata.append("fecha", fecha);
     formdata.append("tipo_comprabante", tipo_comprabante);
     formdata.append("iva", iva);
@@ -126,7 +137,7 @@ function RegistraCompra() {
 
     $.ajax({
         type: "POST",
-        url: RoutesCompra.Url_CreateCompra,
+        url: RoutesVenta.Url_CreateCompra,
         data: formdata,
         contentType: false,
         processData: false,

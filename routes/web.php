@@ -7,6 +7,7 @@ use App\Http\Controllers\ControllerCliente;
 use App\Http\Controllers\ControllerProducto;
 use App\Http\Controllers\ControllerServicios;
 use App\Http\Controllers\ControllerCompras;
+use App\Http\Controllers\ControllerVentas;
 
 Route::get('/', function () { return redirect('/Tienda'); });
 Route::get('/direccion', function () { return redirect('/Tienda'); })->name("/");
@@ -92,5 +93,11 @@ Route::controller(ControllerCarrito::class)->group(function () {
     Route::post('/listar_servicios', 'listar_servicios')->name("carrito.listar_servicios");
     Route::get('/detalle_producto/{id}', 'detalle_producto')->name("carrito.detalle_producto");
     Route::get('/servicios', 'servicios')->name("carrito.servicios");
+});
+
+// Agrupación de rutas para el controlador ControllerVentas
+Route::controller(ControllerVentas::class)->group(function () {
+    /// VENTA
+    Route::get('/nueva_venta', 'nueva_venta')->name("venta.nueva_venta");
 });
 

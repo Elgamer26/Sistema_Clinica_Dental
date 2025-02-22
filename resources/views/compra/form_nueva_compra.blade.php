@@ -48,7 +48,7 @@
 
                                 <div class="col-lg-3">
                                     <div class="mb-3">
-                                        <label class="form-label">Precio del servicio</label>
+                                        <label class="form-label">Buscar producto</label>
                                         <button id="btn_buscar" class="btn btn-warning ms-auto">+ Buscar producto</button>
                                     </div>
                                 </div>
@@ -65,7 +65,7 @@
                                                         <th style="font-size: 15px;">Precio</th>
                                                         <th style="font-size: 15px;">Cantidad</th>
                                                         <th style="font-size: 15px;">Total</th>
-                                                        <th style="font-size: 15px;">Acción</th>
+                                                        <th style="font-size: 15px;">Quitar</th>
                                                     </tr>
                                                 </thead>
 

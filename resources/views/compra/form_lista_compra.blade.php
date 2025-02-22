@@ -46,10 +46,10 @@
                                         <a class="btn btn-primary"  href="{{ route('compra.detalle_compra', $compra['id']) }}" target="_blank">
                                             Detalle
                                         </a>
-                                        -
+                                        <!-- -
                                         <a class="btn btn-danger">
                                             Eliminar
-                                        </a>
+                                        </a> -->
                                     </th>
                                     <th style="font-size: 15px;">{{ $compra["fecha"] }}</th>
                                     @if ($compra["tipo_comprabante"] == 'fac')
